@@ -22,7 +22,7 @@ public class Learning_DataStreamJob_001 {
         env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
 
         // 读取输入数据源，这里假设输入数据是以换行符分隔的文本文件
-        DataStream<String> text = env.readTextFile("hello.txt");
+        DataStream<String> text = env.readTextFile("C:\\Project\\github\\kiba-flink\\kiba-flink-parent\\kiba-flink-basic-learning\\src\\main\\resources\\hello.txt");
         FlatMapFunction<String, Tuple2<String, Integer>> fmf = new FlatMapFunction<String, Tuple2<String, Integer>>() {//FlatMapFunction<String,String> 输入和输出参数的类型
             @Override
             public void flatMap(String value, Collector<Tuple2<String, Integer>> out) throws Exception {
