@@ -38,7 +38,8 @@ public class CDC_DataStreamJob_001 {
                 .password("123456")
                 .debeziumProperties(dbProps)
                 .deserializer(new CustomerDeserialization()) // 将 SourceRecord 转换为 JSON 字符串
-                .startupOptions(StartupOptions.latest())
+                //.startupOptions(StartupOptions.initial())
+                .startupOptions(StartupOptions.timestamp(1700739281)) // 从时间戳启动
                 .build();
 
 

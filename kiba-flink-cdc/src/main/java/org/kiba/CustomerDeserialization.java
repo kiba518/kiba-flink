@@ -2,7 +2,7 @@ package org.kiba;
 
 import com.alibaba.fastjson.JSONObject;
 
-import com.ververica.cdc.connectors.shaded.org.apache.kafka.common.protocol.types.BoundField;
+
 
 import com.ververica.cdc.connectors.shaded.org.apache.kafka.connect.data.Field;
 import com.ververica.cdc.connectors.shaded.org.apache.kafka.connect.data.Schema;
