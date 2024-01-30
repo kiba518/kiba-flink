@@ -3,23 +3,15 @@ package org.kiba.learning_data_stream;
 import cn.hutool.core.date.DateUtil;
 import com.esotericsoftware.minlog.Log;
 import com.mongodb.client.*;
-import org.apache.flink.api.common.RuntimeExecutionMode;
-import org.apache.flink.streaming.api.TimeCharacteristic;
-import org.apache.flink.streaming.api.datastream.DataStreamSource;
-import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.bson.*;
-import org.kiba.tools.job002.MySQTest_LogInfoSource;
-import org.kiba.tools.job002.MySqlTest_LogInfo_ResultWriter;
-import org.kiba.tools.job002.Test_LogInfo;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 利用mangodb-cdc的库，连接mangoDb读取数据，并未实现cdc
  */
-public class Learning_DataStreamJob_003 {
+public class Learning_DataStreamJob_003_mongo {
 
     public static void main(String[] args) throws Exception {
 

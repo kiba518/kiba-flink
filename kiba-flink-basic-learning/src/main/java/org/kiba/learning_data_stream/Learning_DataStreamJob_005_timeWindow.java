@@ -13,9 +13,9 @@ import org.apache.flink.util.Collector;
 import java.util.concurrent.TimeUnit;
 
 /**
- * flatMap的使用
+ * timeWindow的使用
  */
-public class Learning_DataStreamJob_006 {
+public class Learning_DataStreamJob_005_timeWindow {
 
     public static void main(String[] args) throws Exception {
 
@@ -45,12 +45,10 @@ public class Learning_DataStreamJob_006 {
 
             // 对单词流进行分组并计数，输出结果到控制台
             words.keyBy(0)
+                    .timeWindow(Time.of(5, TimeUnit.SECONDS), Time.of(2, TimeUnit.SECONDS)).allowedLateness(Time.of(2, TimeUnit.SECONDS))// 5秒钟窗口，每2秒滑动一次,允许2秒网络延迟
                     .reduce((word1, word2) -> new Tuple2<String, Integer>(word1.f0, word1.f1 + word2.f1 * 10))//依次两两配对
                     .print();
             Log.info("=====================================================================================================================");
-            words.keyBy(0)
-                    .sum(1)//聚合sum第二个数
-                    .print();
 
             // 执行Flink作业
             try {
@@ -61,5 +59,9 @@ public class Learning_DataStreamJob_006 {
         });
         thread.start();
     }
+
+
+
+
 
 }

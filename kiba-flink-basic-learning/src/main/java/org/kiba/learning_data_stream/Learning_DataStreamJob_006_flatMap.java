@@ -7,18 +7,12 @@ import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.util.Collector;
-import org.kiba.tools.job004.ClickEvent;
-
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.concurrent.TimeUnit;
 
 /**
- * timeWindow的使用
+ * flatMap的使用
  */
-public class Learning_DataStreamJob_005 {
+public class Learning_DataStreamJob_006_flatMap {
 
     public static void main(String[] args) throws Exception {
 
@@ -48,10 +42,12 @@ public class Learning_DataStreamJob_005 {
 
             // 对单词流进行分组并计数，输出结果到控制台
             words.keyBy(0)
-                    .timeWindow(Time.of(5, TimeUnit.SECONDS), Time.of(2, TimeUnit.SECONDS)).allowedLateness(Time.of(2, TimeUnit.SECONDS))// 5秒钟窗口，每2秒滑动一次,允许2秒网络延迟
                     .reduce((word1, word2) -> new Tuple2<String, Integer>(word1.f0, word1.f1 + word2.f1 * 10))//依次两两配对
                     .print();
             Log.info("=====================================================================================================================");
+            words.keyBy(0)
+                    .sum(1)//聚合sum第二个数
+                    .print();
 
             // 执行Flink作业
             try {
@@ -62,9 +58,5 @@ public class Learning_DataStreamJob_005 {
         });
         thread.start();
     }
-
-
-
-
 
 }

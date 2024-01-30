@@ -2,16 +2,12 @@ package org.kiba.learning_data_stream;
 
 import com.esotericsoftware.minlog.Log;
 import org.apache.flink.api.common.RuntimeExecutionMode;
-import org.apache.flink.api.common.functions.Partitioner;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
-import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.configuration.Configuration;
-import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.ProcessFunction;
-import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 import org.apache.flink.util.Collector;
 
 import java.time.LocalDateTime;
@@ -21,7 +17,7 @@ import org.kiba.tools.job004.ClickEvent;
  * process使用
  * ValueState使用
  */
-public class Learning_DataStreamJob_010 {
+public class Learning_DataStreamJob_010_process {
     /**
      * 温度升高报警，这个例子不正确，应该定义一个状态数组[ListState]记录温度数据，在定义一个刻度时间，用当前时间判断是否大于刻度时间1秒，然后更新刻度时间，然后在注册时间事件，然后在时间事件里判断数组是否连续上升
      * 或者用聚合接口更好

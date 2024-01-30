@@ -1,23 +1,18 @@
 package org.kiba.learning_data_stream;
 
-import cn.hutool.core.date.DateUtil;
 import com.esotericsoftware.minlog.Log;
-import com.mongodb.client.*;
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.bson.*;
 import org.kiba.tools.job004.ClickEvent;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Arrays;
-import java.util.Date;
 
 /**
  * reduce的使用
  */
-public class Learning_DataStreamJob_004 {
+public class Learning_DataStreamJob_004_reduce {
 
     public static void main(String[] args) throws Exception {
 

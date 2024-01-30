@@ -2,26 +2,17 @@ package org.kiba.learning_data_stream;
 
 import com.esotericsoftware.minlog.Log;
 import org.apache.flink.api.common.RuntimeExecutionMode;
-import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.Partitioner;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
-import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
-import org.apache.flink.streaming.api.windowing.time.Time;
-import org.kiba.tools.job004.ClickEvent;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.concurrent.TimeUnit;
 
 /**
  * partition未测试
  */
-public class Learning_DataStreamJob_009 {
+public class Learning_DataStreamJob_009_partition {
 
     public static void main(String[] args) throws Exception {
 
