@@ -14,7 +14,9 @@ import org.apache.flink.types.Row;
 
 import java.util.Properties;
 
-
+/**
+ * 未测试
+ */
 public class CDC_DataStreamJob_002 {
 
     public static void main(String[] args) throws Exception {
