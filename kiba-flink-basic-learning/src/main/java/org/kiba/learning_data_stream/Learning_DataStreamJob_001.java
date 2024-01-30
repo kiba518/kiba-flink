@@ -1,5 +1,6 @@
-package org.kiba;
+package org.kiba.learning_data_stream;
 
+import cn.hutool.core.io.resource.ResourceUtil;
 import com.esotericsoftware.minlog.Log;
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.functions.FlatMapFunction;
@@ -20,9 +21,12 @@ public class Learning_DataStreamJob_001 {
         //使用window时，可以选择使用EventTime或者ProcessingTime，EventTime主要是配合watermark使用。
         //TimeCharacteristic.ProcessingTime是窗口内部处理数据的时间 EventTime是数据创建时间 IngestionTime是进入flink的时间
         env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
+        String str = ResourceUtil.readUtf8Str("hello.txt");
 
         // 读取输入数据源，这里假设输入数据是以换行符分隔的文本文件
         DataStream<String> text = env.readTextFile("C:\\Project\\github\\kiba-flink\\kiba-flink-parent\\kiba-flink-basic-learning\\src\\main\\resources\\hello.txt");
+        //DataStream<String> text = env.readTextFile(" file:///hello.txt");
+
         FlatMapFunction<String, Tuple2<String, Integer>> fmf = new FlatMapFunction<String, Tuple2<String, Integer>>() {//FlatMapFunction<String,String> 输入和输出参数的类型
             @Override
             public void flatMap(String value, Collector<Tuple2<String, Integer>> out) throws Exception {

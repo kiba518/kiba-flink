@@ -1,4 +1,4 @@
-package org.kiba;
+package org.kiba.learning_data_stream;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.esotericsoftware.minlog.Log;
