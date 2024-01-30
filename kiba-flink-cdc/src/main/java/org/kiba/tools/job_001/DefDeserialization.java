@@ -1,24 +1,22 @@
-package org.kiba;
+package org.kiba.tools.job_001;
 
 import com.alibaba.fastjson.JSONObject;
-
-
-
 import com.ververica.cdc.connectors.shaded.org.apache.kafka.connect.data.Field;
 import com.ververica.cdc.connectors.shaded.org.apache.kafka.connect.data.Schema;
 import com.ververica.cdc.connectors.shaded.org.apache.kafka.connect.data.Struct;
-import com.ververica.cdc.connectors.shaded.org.apache.kafka.connect.source.SourceRecord;
-import com.ververica.cdc.debezium.DebeziumDeserializationSchema;
 import io.debezium.data.Envelope;
 import org.apache.flink.api.common.typeinfo.BasicTypeInfo;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
-import org.apache.flink.util.Collector;
-
 
 import java.util.List;
 
-public class CustomerDeserialization implements DebeziumDeserializationSchema<String> {
+public class DefDeserialization implements com.ververica.cdc.debezium.DebeziumDeserializationSchema<String> {
 
+
+    @Override
+    public TypeInformation<String> getProducedType() {
+        return BasicTypeInfo.STRING_TYPE_INFO;
+    }
     /**
      * 封装的数据格式
      * {
@@ -30,9 +28,8 @@ public class CustomerDeserialization implements DebeziumDeserializationSchema<St
      * //"ts":156456135615
      * }
      */
-    @Override
-    public void deserialize(SourceRecord sourceRecord, Collector<String> collector) throws Exception {
 
+    public void deserialize(com.ververica.cdc.connectors.shaded.org.apache.kafka.connect.source.SourceRecord sourceRecord, org.apache.flink.util.Collector<String> collector) throws Exception {
         //1.创建JSON对象用于存储最终数据
         JSONObject result = new JSONObject();
 
@@ -83,11 +80,6 @@ public class CustomerDeserialization implements DebeziumDeserializationSchema<St
 
         //7.输出数据
         collector.collect(result.toJSONString());
-
     }
 
-    @Override
-    public TypeInformation<String> getProducedType() {
-        return BasicTypeInfo.STRING_TYPE_INFO;
-    }
 }
