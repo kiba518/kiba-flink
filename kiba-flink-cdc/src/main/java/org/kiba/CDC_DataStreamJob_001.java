@@ -28,6 +28,15 @@ import java.util.Properties;
  * latest-offset: Never to perform snapshot on the monitored database tables upon first  startup, just read from the end of the binlog which means only have the changes since the connector was started.
  * timestamp: Never to perform snapshot on the monitored database tables upon first  startup, and directly read binlog from the specified timestamp. The consumer will traverse the binlog from the beginning and ignore change events whose timestamp is smaller than the specified timestamp.
  * specific-offset: Never to perform snapshot on the monitored database tables upon first startup, and directly read binlog from the specified offset.
+ *
+ *
+ * # 在重启任务之前，需要先取消当前正在运行的任务。可以使用以下命令来取消任务：
+ *
+ * ./bin/flink cancel -s <checkpointId> <jobId>
+ *
+ * # 使用flink run命令重新提交任务。在取消任务后，可以使用以下命令重新提交任务：
+ * # 注意：此处重启只能指定jar文件
+ * ./bin/flink run -s <checkpoint_path> -d <jarFile>
  */
 public class CDC_DataStreamJob_001 {
 
@@ -55,7 +64,7 @@ public class CDC_DataStreamJob_001 {
         dbProps.put("database.serverTimezone", "UTC");
         //dbProps.put("database.serverTimezone", "Asia/Shanghai");//MYSQL是cst时用这个配置 使用命令查询 select @@system_time_zone;
 
-
+        ConfigUtils.init();
         final String host = ConfigUtils.CONFIG.getHost();
         final int port = ConfigUtils.CONFIG.getPort();
         final String username = ConfigUtils.CONFIG.getMiddle_database_username();
@@ -72,8 +81,7 @@ public class CDC_DataStreamJob_001 {
                 .password(password)
                 .debeziumProperties(dbProps)
                 .deserializer(new CustomerDeserialization()) // 将 SourceRecord 转换为 JSON 字符串
-                .startupOptions(StartupOptions.initial())
-                //.startupOptions(StartupOptions.timestamp(1700739281)) // 从时间戳启动
+                //.startupOptions(StartupOptions.initial())
                 .build();
 
 
