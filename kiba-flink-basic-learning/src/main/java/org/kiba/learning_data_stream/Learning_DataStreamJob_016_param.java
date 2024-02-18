@@ -50,6 +50,7 @@ public class Learning_DataStreamJob_016_param {
         env.setRuntimeMode(RuntimeExecutionMode.STREAMING);
         env.setParallelism(1);//设置输入流并行度
 
+
         DataStream<Integer> dataStreamSource1 = env.fromElements(1, 10, 50);
 
         ArrayList<Tuple2<String,Integer>> broadData = new ArrayList<>();
