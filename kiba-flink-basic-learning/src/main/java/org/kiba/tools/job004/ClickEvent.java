@@ -1,6 +1,7 @@
 package org.kiba.tools.job004;
 
 public class ClickEvent {
+    public ClickEvent(){}
     public ClickEvent(String name, int data, long timestamp) {
         this.name = name;
         this.data = data;
