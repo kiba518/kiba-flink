@@ -1,20 +1,4 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 package org.kiba.learning_ml;
 
@@ -31,7 +15,9 @@ import org.apache.flink.types.Row;
 import org.apache.flink.util.CloseableIterator;
 
 @Slf4j
-/** Simple program that trains a Knn model and uses it for classification. */
+/** Simple program that trains a Knn model and uses it for classification.
+ * Knn（K-Nearest Neighbors）是一种分类算法，它根据样本与其最近的邻居的类别来对新样本进行分类。Knn 算法通过计算新样本与训练数据集中每个样本的距离，然后选择最近的 K 个样本，根据这些邻居的类别来确定新样本的类别。
+ * */
 public class KnnExample {
     public static void main(String[] args) {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -62,7 +48,7 @@ public class KnnExample {
                         Row.of(Vectors.dense(2.5, 3.2), 5.0),
                         Row.of(Vectors.dense(2.5, 3.2), 5.0),
                         Row.of(Vectors.dense(2.1, 3.1), 1.0));
-        Table trainTable = tEnv.fromDataStream(trainStream).as("features", "label");
+        Table trainTable = tEnv.fromDataStream(trainStream).as("features", "label");//为表格中的列指定别名
 
         DataStream<Row> predictStream =
                 env.fromElements(
@@ -75,11 +61,22 @@ public class KnnExample {
         // Trains the Knn Model.
         KnnModel knnModel = knn.fit(trainTable);
 
+        Table outputTable1 = knnModel.transform(trainTable)[0];
+        // Extracts and displays the results.
+        for (CloseableIterator<Row> it = outputTable1.execute().collect(); it.hasNext(); ) {
+            Row row = it.next();
+            DenseVector features = (DenseVector) row.getField(knn.getFeaturesCol());//源数据
+            double clusterId = (Double) row.getField(knn.getPredictionCol());//聚集点
+            System.out.printf("===========属性Features: %s  Cluster ID: %s ========== \n", features, clusterId);
+        }
+
+
+
         // Uses the Knn Model for predictions.
-        Table outputTable = knnModel.transform(predictTable)[0];
+        Table outputTable2 = knnModel.transform(predictTable)[0];
 
         // Extracts and displays the results.
-        for (CloseableIterator<Row> it = outputTable.execute().collect(); it.hasNext(); ) {
+        for (CloseableIterator<Row> it = outputTable2.execute().collect(); it.hasNext(); ) {
             Row row = it.next();
             DenseVector features = (DenseVector) row.getField(knn.getFeaturesCol());
             double expectedResult = (Double) row.getField(knn.getLabelCol());
