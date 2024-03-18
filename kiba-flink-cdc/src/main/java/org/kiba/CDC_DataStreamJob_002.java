@@ -9,7 +9,7 @@ import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
  * flink-table-api-scala-bridge：bridge 桥接器，主要负责table API 和DataStream/DataSet API的连接支持，按照语言分java 和scala。
  * 这里的两个依赖，是IDE 环境下运行需要添加的；如果是生产环境，lib 目录下默认已经有了planner，就只需要有bridge 就可以了。
  * 如果想使用用户自定义函数，或是跟kafka 做连接，需要有一个SQL client，这个包含在flink-table-common 里。
- * flink-connector-jdbc_2.12是 Flink 的 JDBC 连接器，用于与数据库进行交互。
+ * flink-connector-jdbc 【3.1.2-1.18】 是 Flink 的 JDBC 连接器，用于与数据库进行交互。 注意版本要对上。
  */
 public class CDC_DataStreamJob_002 {
 
